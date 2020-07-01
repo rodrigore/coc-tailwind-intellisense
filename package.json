@@ -7,7 +7,7 @@
         "Nicolas Vasquez <nicolas.vasquez.t@usach.cl>"
     ],
     "license": "MIT",
-    "main": "src/index.ts",
+    "main": "lib/index.ts",
     "keywords": [
         "coc.nvim",
         "tailwind",
