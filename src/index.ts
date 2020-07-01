@@ -1,17 +1,13 @@
 import {ExtensionContext, LanguageClient, LanguageClientOptions, ServerOptions, services, TransportKind, workspace} from 'coc.nvim';
-import {NotificationType} from 'vscode-languageserver-protocol';
-
-namespace CustomDataChangedNotification {
-  export const type: NotificationType<string[]> = new NotificationType('css/customDataChanged');
-}
+import { createEmitter } from './emitter';
+import { registerConfigErrorHandler } from './registerConfigErrorHandler';
 
 export async function activate(context: ExtensionContext): Promise<void> {
   let {subscriptions} = context;
-  const config = workspace.getConfiguration().get<any>('css', {}) as any;
+  const config = workspace.getConfiguration().get<any>('tailwindCSS', {}) as any;
   if (!config.enable) return;
   const file = context.asAbsolutePath('./lib/intellisense/src/server/index.js');
-  const selector = ['php', 'blade', 'html'];
-  // const customDataSource = getCustomDataSource(context.subscriptions);
+  const selector = ['php', 'blade', 'blade.php', 'html', 'vue'];
 
   let serverOptions: ServerOptions = {
     module: file,
@@ -25,9 +21,10 @@ export async function activate(context: ExtensionContext): Promise<void> {
   let clientOptions: LanguageClientOptions = {
     documentSelector: selector,
     synchronize: {
-      configurationSection: ['php', 'blade', 'html']
+      configurationSection: 'tailwindcss-intellisense',
     },
     outputChannelName: 'Tailwind CSS IntelliSense',
+    diagnosticCollectionName: 'tailwindcss-intellisense',
     initializationOptions: {
       handledSchemas: ['file']
     },
@@ -37,12 +34,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   let client = new LanguageClient('tailwindcss-intellisense', 'Tailwind CSS IntelliSense', serverOptions, clientOptions);
 
-  // tslint:disable-next-line: no-floating-promises
   client.onReady().then(() => {
-    // client.sendNotification(CustomDataChangedNotification.type, customDataSource.uris)
-    // customDataSource.onDidChange(() => {
-    //   client.sendNotification(CustomDataChangedNotification.type, customDataSource.uris)
-    // });
+      workspace.showMessage('Tailwind CSS intellisense ready!');
+
+      let emitter = createEmitter(client);
+      registerConfigErrorHandler(emitter);
   });
 
   subscriptions.push(
