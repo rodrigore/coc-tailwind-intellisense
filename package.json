@@ -23,7 +23,7 @@
         "clean": "rimraf lib",
         "watch": "webpack --watch",
         "build": "webpack",
-        "prepare": "npm run clean && npm run prepare:server && npm run build-server && npm run build",
+        "prepare": "npm run clean && npm run build && npm run prepare:server && npm run build-server",
         "prepare:server": "cd intellisense && npm install && cd ..",
         "build-server": "glob-exec --foreach --parallel \"intellisense/src/server.ts\" -- \"ncc build {{file}} -o lib/{{file.toString().replace(/^src\\//, '').replace(/\\.ts$/, '')}}\""
     },
