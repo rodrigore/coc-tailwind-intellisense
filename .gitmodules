@@ -1,0 +1,3 @@
+[submodule "intellisense"]
+	path = intellisense
+	url = https://github.com/tailwindcss/intellisense

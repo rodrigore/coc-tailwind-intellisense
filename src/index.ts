@@ -1,20 +1,51 @@
-const { commands, workspace } = require('coc.nvim')
+import {ExtensionContext, LanguageClient, LanguageClientOptions, ServerOptions, services, TransportKind, workspace} from 'coc.nvim';
+import {NotificationType} from 'vscode-languageserver-protocol';
 
-exports.activate = context => {
-  let { nvim } = workspace
+namespace CustomDataChangedNotification {
+  export const type: NotificationType<string[]> = new NotificationType('css/customDataChanged');
+}
 
-  let { logger } = context;
-  logger.info(`Extension from ${context.extensionPath}`)
+export async function activate(context: ExtensionContext): Promise<void> {
+  let {subscriptions} = context;
+  const config = workspace.getConfiguration().get<any>('css', {}) as any;
+  if (!config.enable) return;
+  const file = context.asAbsolutePath('./lib/intellisense/src/server/index.js');
+  const selector = ['php', 'blade', 'html'];
+  // const customDataSource = getCustomDataSource(context.subscriptions);
 
-  context.subscriptions.push(commands.registerCommand('code.convertCodePoint', async () => {
-    let [pos, line] = await nvim.eval('[coc#util#cursor(), getline(".")]')
-    logger.info(`linea: ${line}`)
+  let serverOptions: ServerOptions = {
+    module: file,
+    transport: TransportKind.ipc,
+    options: {
+      cwd: workspace.root,
+      execArgv: config.execArgv || []
+    }
+  };
 
-    let curr = pos[1] == 0 ? '' : line.slice(pos[1], pos[1] + 1)
-    let code = curr.codePointAt(0)
-    let str = code.toString(16)
-    str = str.length == 4 ? str : '0'.repeat(4 - str.length) + str
-    let result = `${line.slice(0, pos[1])}${'\\u' + str}${line.slice(pos[1] + 1)}`
-    await nvim.call('setline', ['.', result])
-  }))
+  let clientOptions: LanguageClientOptions = {
+    documentSelector: selector,
+    synchronize: {
+      configurationSection: ['php', 'blade', 'html']
+    },
+    outputChannelName: 'Tailwind CSS IntelliSense',
+    initializationOptions: {
+      handledSchemas: ['file']
+    },
+    middleware: {
+    }
+  };
+
+  let client = new LanguageClient('tailwindcss-intellisense', 'Tailwind CSS IntelliSense', serverOptions, clientOptions);
+
+  // tslint:disable-next-line: no-floating-promises
+  client.onReady().then(() => {
+    // client.sendNotification(CustomDataChangedNotification.type, customDataSource.uris)
+    // customDataSource.onDidChange(() => {
+    //   client.sendNotification(CustomDataChangedNotification.type, customDataSource.uris)
+    // });
+  });
+
+  subscriptions.push(
+    services.registLanguageClient(client)
+  );
 }
