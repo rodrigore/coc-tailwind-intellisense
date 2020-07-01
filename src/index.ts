@@ -1,6 +1,8 @@
 import {ExtensionContext, LanguageClient, LanguageClientOptions, ServerOptions, services, TransportKind, workspace} from 'coc.nvim';
-import { createEmitter } from './emitter';
 import { registerConfigErrorHandler } from './registerConfigErrorHandler';
+import { onMessage } from './notifications';
+import { createEmitter } from './emitter';
+
 
 export async function activate(context: ExtensionContext): Promise<void> {
   let {subscriptions} = context;
@@ -39,6 +41,10 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
       let emitter = createEmitter(client);
       registerConfigErrorHandler(emitter);
+
+      onMessage(client, 'getConfiguration', async (scope) => {
+        return workspace.getConfiguration('tailwindCSS', scope)
+      })
   });
 
   subscriptions.push(
