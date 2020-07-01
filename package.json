@@ -24,7 +24,7 @@
         "watch": "webpack --watch",
         "build": "webpack",
         "prepare": "npm-run-all clean build build-server",
-        "build-server": "glob-exec --foreach --parallel \"src/*.ts\" -- \"ncc build {{file}} -o dist/{{file.toString().replace(/^src\\//, '').replace(/\\.ts$/, '')}}\""
+        "build-server": "glob-exec --foreach --parallel \"intellisense/src/server.ts\" -- \"ncc build {{file}} -o lib/{{file.toString().replace(/^src\\//, '').replace(/\\.ts$/, '')}}\""
     },
     "activationEvents": [
         "workspaceContains:**/tailwind.js",
