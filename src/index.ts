@@ -3,7 +3,6 @@ import { registerConfigErrorHandler } from './registerConfigErrorHandler';
 import { onMessage } from './notifications';
 import { createEmitter } from './emitter';
 
-
 export async function activate(context: ExtensionContext): Promise<void> {
   let {subscriptions} = context;
   const config = workspace.getConfiguration().get<any>('tailwindCSS', {}) as any;
