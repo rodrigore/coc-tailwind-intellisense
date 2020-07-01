@@ -1,4 +1,4 @@
-![banner](/screenshoots/banner.jpeg?raw=true "banner")
+![banner](/screenshots/banner.jpeg?raw=true "banner")
 
 Coc integration for [Tailwind CSS IntelliSense](https://github.com/tailwindcss/intellisense) for version 0.4
 
@@ -16,11 +16,11 @@ in your `.vimrc` or `init.vim`, then restart or source vimrc and run `:PlugInsta
 
 ## Features
 * Autocomplete
-![autocomplete](/screenshoots/autocomplete.png?raw=true "Autocomplete")
+![autocomplete](/screenshots/autocomplete.png?raw=true "Autocomplete")
 * Linting
-![linting](/screenshoots/linter.png?raw=true "Linting")
+![linting](/screenshots/linter.png?raw=true "Linting")
 * Hover Preview
-![hovere](/screenshoots/hover.png?raw=true "Hover")
+![hovere](/screenshots/hover.png?raw=true "Hover")
 
 ## Settings
 
