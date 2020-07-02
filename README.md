@@ -24,8 +24,8 @@ in your `.vimrc` or `init.vim`, then restart or source vimrc and run `:PlugInsta
 
 ## Settings
 
-* `tailwindCSS.enable` set to `false` to disable php language server. (`true` by default)
-* Checkout the official [settings] (https://github.com/tailwindcss/intellisense/blob/master/README.md#settings)
+* `tailwindCSS.enable` set to `false` to disable tailwind intellisense server. (`true` by default)
+* Official [settings](https://github.com/tailwindcss/intellisense/blob/master/README.md#settings)
 
 ## Troubleshooting
 * Read [here](https://github.com/tailwindcss/intellisense/blob/master/README.md#troubleshooting)
