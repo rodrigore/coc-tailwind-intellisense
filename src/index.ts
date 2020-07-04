@@ -1,11 +1,11 @@
 import { ExtensionContext, LanguageClient, LanguageClientOptions, ServerOptions, services, TransportKind, workspace, Uri } from 'coc.nvim';
 import { TextDocument, WorkspaceFolder } from 'vscode-languageserver-protocol';
 import { registerConfigErrorHandler } from './registerConfigErrorHandler';
+import { DEFAULT_LANGUAGES } from '../intellisense/src/lib/languages';
 import { onMessage } from './notifications';
 import { createEmitter } from './emitter';
 import isObject from './isObject';
 import { dedupe } from './array';
-import { DEFAULT_LANGUAGES } from '../intellisense/src/lib/languages';
 
 let languages: Map<string, string[]> = new Map();
 
@@ -59,9 +59,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
   let {subscriptions} = context;
   const config = workspace.getConfiguration().get<any>('tailwindCSS', {}) as any;
   if (!config.enable) return;
-  const file = context.asAbsolutePath('./lib/intellisense/src/server/index.js');
-  // const selector = ['php', 'blade', 'blade.php', 'html', 'vue'];
-  
+  const file = context.asAbsolutePath('./lib-server/intellisense/src/server/index.js');
+
   function bootWorkspaceClient(folder: WorkspaceFolder) {
     let serverOptions: ServerOptions = {
       module: file,
@@ -110,7 +109,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       services.registLanguageClient(client)
     );
   };
-  
+
   function didOpenTextDocument(document: TextDocument): void {
     let uri = Uri.parse(document.uri);
 
@@ -136,6 +135,6 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
     bootWorkspaceClient(folder);
   };
-  
+
   workspace.onDidOpenTextDocument(didOpenTextDocument);
 };

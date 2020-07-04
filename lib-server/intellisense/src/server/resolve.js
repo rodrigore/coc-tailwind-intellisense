@@ -1,0 +1,1 @@
+"use strict";process.on("message",e=>{if("exit"===e.command)process.exit(0);else if("resolve"===e.command)try{let s=require.resolve(e.args);process.send({command:"resolve",success:!0,result:s})}catch(e){process.send({command:"resolve",success:!1})}});

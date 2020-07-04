@@ -1,6 +1,6 @@
 {
     "name": "coc-tailwind-intellisense",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Tailwind CSS Intellisense for coc.nvim",
     "author": "Rodrigo C. Guzmán <rodrigopcg@gmail.com>",
     "contributors": [
@@ -23,9 +23,10 @@
         "clean": "rimraf lib",
         "watch": "webpack --watch",
         "build": "webpack",
-        "prepare": "npm run clean && npm run build && npm run prepare:server && npm run build-server",
-        "prepare:server": "cd intellisense && npm install && cd ..",
-        "build-server": "glob-exec --foreach --parallel \"intellisense/src/server.ts\" -- \"ncc build {{file}} -o lib/{{file.toString().replace(/^src\\//, '').replace(/\\.ts$/, '')}}\""
+        "prepare": "npm run clean && npm run build",
+        "prepare:server": "cd intellisense && npm install && cd .. && npm run build-server && npm run minify-server",
+        "build-server": "glob-exec --foreach --parallel \"intellisense/src/server.ts\" -- \"ncc build {{file}} -o lib-server/{{file.toString().replace(/^src\\//, '').replace(/\\.ts$/, '')}}\"",
+        "minify-server": "glob-exec --foreach --parallel \"lib-server/**/*.js\" -- \"terser {{file}} --compress --mangle --output {{file.toString()}}\""
     },
     "activationEvents": [
         "workspaceContains:**/tailwind.js",
