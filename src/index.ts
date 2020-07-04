@@ -1,7 +1,7 @@
 import { ExtensionContext, LanguageClient, LanguageClientOptions, ServerOptions, services, TransportKind, workspace, Uri } from 'coc.nvim';
 import { TextDocument, WorkspaceFolder } from 'vscode-languageserver-protocol';
 import { registerConfigErrorHandler } from './registerConfigErrorHandler';
-import { DEFAULT_LANGUAGES } from '../intellisense/src/lib/languages';
+import { DEFAULT_LANGUAGES } from './languages';
 import { onMessage } from './notifications';
 import { createEmitter } from './emitter';
 import isObject from './isObject';
