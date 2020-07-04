@@ -4,9 +4,10 @@ Coc integration for [Tailwind CSS IntelliSense](https://github.com/tailwindcss/i
 
 ## Install
 
-In your vim/neovim, run command:
-
-For [vim-plug](https://github.com/junegunn/vim-plug) users:
+```vim
+:CocInstall https://github.com/rodrigore/coc-tailwind-intellisense
+```
+or if you are a [vim-plug](https://github.com/junegunn/vim-plug) user, add:
 
 ```vim
 Plug 'rodrigore/coc-tailwind-intellisense', {'do': 'npm install'}
