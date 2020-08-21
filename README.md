@@ -21,7 +21,10 @@ in your `.vimrc` or `init.vim`, then restart or source vimrc and run `:PlugInsta
 * Linting
 ![linting](/screenshots/linter.png?raw=true "Linting")
 * Hover Preview
-![hovere](/screenshots/hover.png?raw=true "Hover")
+![hover](/screenshots/hover.png?raw=true "Hover")
+
+## Features not working
+* Since version 0.42 tailwind have the ability to show color decorator. At the time of this writing vim/neovim/coc.nvim don't support decorator.
 
 ## Settings
 

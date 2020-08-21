@@ -95,7 +95,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     let client = new LanguageClient('tailwindcss-intellisense', 'Tailwind CSS IntelliSense', serverOptions, clientOptions);
 
     client.onReady().then(() => {
-        workspace.showMessage('Tailwind CSS intellisense ready!');
+        workspace.showMessage('Tailwind CSS intellisense ready v0.42');
 
         let emitter = createEmitter(client);
         registerConfigErrorHandler(emitter);
