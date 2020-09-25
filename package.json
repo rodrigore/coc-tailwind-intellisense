@@ -1,155 +1,155 @@
 {
-    "name": "coc-tailwind-intellisense",
-    "version": "0.2",
-    "description": "Tailwind CSS Intellisense for coc.nvim",
-    "author": "Rodrigo C. Guzmán <rodrigopcg@gmail.com>",
-    "contributors": [
-        "Nicolas Vasquez <nicolas.vasquez.t@usach.cl>"
-    ],
-    "license": "MIT",
-    "main": "lib/index.js",
-    "keywords": [
-        "coc.nvim",
-        "tailwind",
-        "tailwindcss",
-        "css",
-        "intellisense",
-        "autocomplete"
-    ],
-    "engines": {
-        "coc": "^0.0.70"
-    },
-    "scripts": {
-        "clean": "rimraf lib",
-        "watch": "webpack --watch",
-        "build": "webpack",
-        "prepare": "npm run clean && npm run build",
-        "prepare:server": "cd intellisense && npm install && cd .. && npm run build-server && npm run minify-server",
-        "build-server": "glob-exec --foreach --parallel \"intellisense/src/server.ts\" -- \"ncc build {{file}} -o lib-server/{{file.toString().replace(/^src\\//, '').replace(/\\.ts$/, '')}}\"",
-        "minify-server": "glob-exec --foreach --parallel \"lib-server/**/*.js\" -- \"terser {{file}} --compress --mangle --output {{file.toString()}}\""
-    },
-    "activationEvents": [
-        "workspaceContains:**/tailwind.js",
-        "workspaceContains:**/tailwind.config.js",
-        "workspaceContains:**/tailwind-config.js",
-        "workspaceContains:**/.tailwindrc.js"
-    ],
-    "contributes": {
-        "configuration": {
-            "title": "Tailwind CSS IntelliSense",
-            "properties": {
-                "tailwindCSS.enable": {
-                    "type": "boolean",
-                    "default": true
-                },
-                "tailwindCSS.emmetCompletions": {
-                    "type": "boolean",
-                    "default": false,
-                    "markdownDescription": "Enable class name completions when using Emmet-style syntax, for example `div.bg-red-500.uppercase`"
-                },
-                "tailwindCSS.includeLanguages": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    },
-                    "default": {},
-                    "markdownDescription": "Enable features in languages that are not supported by default. Add a mapping here between the new language and an already supported language.\n E.g.: `{\"plaintext\": \"html\"}`"
-                },
-                "tailwindCSS.validate": {
-                    "type": "boolean",
-                    "default": true,
-                    "markdownDescription": "Enable linting. Rules can be configured individually using the `tailwindcss.lint.*` settings",
-                    "scope": "language-overridable"
-                },
-                "tailwindCSS.lint.cssConflict": {
-                    "type": "string",
-                    "enum": [
-                        "ignore",
-                        "warning",
-                        "error"
-                    ],
-                    "default": "warning",
-                    "markdownDescription": "Class names on the same HTML element which apply the same CSS property or properties",
-                    "scope": "language-overridable"
-                },
-                "tailwindCSS.lint.invalidApply": {
-                    "type": "string",
-                    "enum": [
-                        "ignore",
-                        "warning",
-                        "error"
-                    ],
-                    "default": "error",
-                    "markdownDescription": "Unsupported use of the [`@apply` directive](https://tailwindcss.com/docs/functions-and-directives/#apply)",
-                    "scope": "language-overridable"
-                },
-                "tailwindCSS.lint.invalidScreen": {
-                    "type": "string",
-                    "enum": [
-                        "ignore",
-                        "warning",
-                        "error"
-                    ],
-                    "default": "error",
-                    "markdownDescription": "Unknown screen name used with the [`@screen` directive](https://tailwindcss.com/docs/functions-and-directives/#screen)",
-                    "scope": "language-overridable"
-                },
-                "tailwindCSS.lint.invalidVariant": {
-                    "type": "string",
-                    "enum": [
-                        "ignore",
-                        "warning",
-                        "error"
-                    ],
-                    "default": "error",
-                    "markdownDescription": "Unknown variant name used with the [`@variants` directive](https://tailwindcss.com/docs/functions-and-directives/#variants)",
-                    "scope": "language-overridable"
-                },
-                "tailwindCSS.lint.invalidConfigPath": {
-                    "type": "string",
-                    "enum": [
-                        "ignore",
-                        "warning",
-                        "error"
-                    ],
-                    "default": "error",
-                    "markdownDescription": "Unknown or invalid path used with the [`theme` helper](https://tailwindcss.com/docs/functions-and-directives/#theme)",
-                    "scope": "language-overridable"
-                },
-                "tailwindCSS.lint.invalidTailwindDirective": {
-                    "type": "string",
-                    "enum": [
-                        "ignore",
-                        "warning",
-                        "error"
-                    ],
-                    "default": "error",
-                    "markdownDescription": "Unknown value used with the [`@tailwind` directive](https://tailwindcss.com/docs/functions-and-directives/#tailwind)",
-                    "scope": "language-overridable"
-                }
-            }
+  "name": "coc-tailwind-intellisense",
+  "version": "0.3.0",
+  "description": "Tailwind CSS Intellisense for coc.nvim",
+  "author": "Rodrigo C. Guzmán <rodrigopcg@gmail.com>",
+  "contributors": [
+    "Nicolas Vasquez <nicolas.vasquez.t@usach.cl>"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "keywords": [
+    "coc.nvim",
+    "tailwind",
+    "tailwindcss",
+    "css",
+    "intellisense",
+    "autocomplete"
+  ],
+  "engines": {
+    "coc": "^0.0.70"
+  },
+  "scripts": {
+    "clean": "rimraf lib",
+    "watch": "webpack --watch",
+    "build": "webpack",
+    "prepare": "npm run clean && npm run build",
+    "prepare:server": "cd intellisense && npm install && cd .. && npm run build-server && npm run minify-server",
+    "build-server": "glob-exec --foreach --parallel \"intellisense/src/server.ts\" -- \"ncc build {{file}} -o lib-server/{{file.toString().replace(/^src\\//, '').replace(/\\.ts$/, '')}}\"",
+    "minify-server": "glob-exec --foreach --parallel \"lib-server/**/*.js\" -- \"terser {{file}} --compress --mangle --output {{file.toString()}}\""
+  },
+  "activationEvents": [
+    "workspaceContains:**/tailwind.js",
+    "workspaceContains:**/tailwind.config.js",
+    "workspaceContains:**/tailwind-config.js",
+    "workspaceContains:**/.tailwindrc.js"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "Tailwind CSS IntelliSense",
+      "properties": {
+        "tailwindCSS.enable": {
+          "type": "boolean",
+          "default": true
+        },
+        "tailwindCSS.emmetCompletions": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Enable class name completions when using Emmet-style syntax, for example `div.bg-red-500.uppercase`"
+        },
+        "tailwindCSS.includeLanguages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
+          "markdownDescription": "Enable features in languages that are not supported by default. Add a mapping here between the new language and an already supported language.\n E.g.: `{\"plaintext\": \"html\"}`"
+        },
+        "tailwindCSS.validate": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Enable linting. Rules can be configured individually using the `tailwindcss.lint.*` settings",
+          "scope": "language-overridable"
+        },
+        "tailwindCSS.lint.cssConflict": {
+          "type": "string",
+          "enum": [
+            "ignore",
+            "warning",
+            "error"
+          ],
+          "default": "warning",
+          "markdownDescription": "Class names on the same HTML element which apply the same CSS property or properties",
+          "scope": "language-overridable"
+        },
+        "tailwindCSS.lint.invalidApply": {
+          "type": "string",
+          "enum": [
+            "ignore",
+            "warning",
+            "error"
+          ],
+          "default": "error",
+          "markdownDescription": "Unsupported use of the [`@apply` directive](https://tailwindcss.com/docs/functions-and-directives/#apply)",
+          "scope": "language-overridable"
+        },
+        "tailwindCSS.lint.invalidScreen": {
+          "type": "string",
+          "enum": [
+            "ignore",
+            "warning",
+            "error"
+          ],
+          "default": "error",
+          "markdownDescription": "Unknown screen name used with the [`@screen` directive](https://tailwindcss.com/docs/functions-and-directives/#screen)",
+          "scope": "language-overridable"
+        },
+        "tailwindCSS.lint.invalidVariant": {
+          "type": "string",
+          "enum": [
+            "ignore",
+            "warning",
+            "error"
+          ],
+          "default": "error",
+          "markdownDescription": "Unknown variant name used with the [`@variants` directive](https://tailwindcss.com/docs/functions-and-directives/#variants)",
+          "scope": "language-overridable"
+        },
+        "tailwindCSS.lint.invalidConfigPath": {
+          "type": "string",
+          "enum": [
+            "ignore",
+            "warning",
+            "error"
+          ],
+          "default": "error",
+          "markdownDescription": "Unknown or invalid path used with the [`theme` helper](https://tailwindcss.com/docs/functions-and-directives/#theme)",
+          "scope": "language-overridable"
+        },
+        "tailwindCSS.lint.invalidTailwindDirective": {
+          "type": "string",
+          "enum": [
+            "ignore",
+            "warning",
+            "error"
+          ],
+          "default": "error",
+          "markdownDescription": "Unknown value used with the [`@tailwind` directive](https://tailwindcss.com/docs/functions-and-directives/#tailwind)",
+          "scope": "language-overridable"
         }
-    },
-    "dependencies": {
-        "@zeit/ncc": "^0.22.3",
-        "glob-exec": "^0.1.1",
-        "lodash": "^4.17.20",
-        "mitt": "^1.2.0",
-        "vscode-languageclient": "^6.1.3",
-        "vscode-languageserver": "^6.1.1",
-        "vscode-languageserver-protocol": "^3.15.3"
-    },
-    "devDependencies": {
-        "@types/node": "^14.0.13",
-        "@typescript-eslint/eslint-plugin": "^2.30.0",
-        "@typescript-eslint/parser": "^2.30.0",
-        "eslint": "^6.8.0",
-        "coc.nvim": "^0.0.77",
-        "npm-run-all": "^4.1.5",
-        "rimraf": "^3.0.2",
-        "ts-loader": "^7.0.5",
-        "typescript": "^3.9.5",
-        "webpack": "^4.43.0",
-        "webpack-cli": "^3.3.11"
+      }
     }
+  },
+  "dependencies": {
+    "@zeit/ncc": "^0.22.3",
+    "glob-exec": "^0.1.1",
+    "lodash": "^4.17.20",
+    "mitt": "^1.2.0",
+    "vscode-languageclient": "^6.1.3",
+    "vscode-languageserver": "^6.1.1",
+    "vscode-languageserver-protocol": "^3.15.3"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.13",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "eslint": "^6.8.0",
+    "coc.nvim": "^0.0.77",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  }
 }
