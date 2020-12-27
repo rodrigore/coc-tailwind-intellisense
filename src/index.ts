@@ -59,7 +59,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   let {subscriptions} = context;
   const config = workspace.getConfiguration().get<any>('tailwindCSS', {}) as any;
   if (!config.enable) return;
-  const file = context.asAbsolutePath('./lib-server/intellisense/src/server/index.js');
+  const file = context.asAbsolutePath('./lib-server/intellisense/packages/tailwindcss-intellisense/src/server/index.js');
 
   function bootWorkspaceClient(folder: WorkspaceFolder) {
     let serverOptions: ServerOptions = {
@@ -95,7 +95,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     let client = new LanguageClient('tailwindcss-intellisense', 'Tailwind CSS IntelliSense', serverOptions, clientOptions);
 
     client.onReady().then(() => {
-        workspace.showMessage('Tailwind CSS intellisense ready v0.43');
+        workspace.showMessage('Tailwind CSS intellisense ready v0.56');
 
         let emitter = createEmitter(client);
         registerConfigErrorHandler(emitter);

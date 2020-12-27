@@ -1,6 +1,6 @@
 {
   "name": "coc-tailwind-intellisense",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Tailwind CSS Intellisense for coc.nvim",
   "author": "Rodrigo C. Guzmán <rodrigopcg@gmail.com>",
   "contributors": [
@@ -25,7 +25,7 @@
     "build": "webpack",
     "prepare": "npm run clean && npm run build",
     "prepare:server": "cd intellisense && npm install && cd .. && npm run build-server && npm run minify-server",
-    "build-server": "glob-exec --foreach --parallel \"intellisense/src/server.ts\" -- \"ncc build {{file}} -o lib-server/{{file.toString().replace(/^src\\//, '').replace(/\\.ts$/, '')}}\"",
+    "build-server": "glob-exec --foreach --parallel \"intellisense/packages/tailwindcss-intellisense/src/server.ts\" -- \"ncc build {{file}} -o lib-server/{{file.toString().replace(/^src\\//, '').replace(/\\.ts$/, '')}}\"",
     "minify-server": "glob-exec --foreach --parallel \"lib-server/**/*.js\" -- \"terser {{file}} --compress --mangle --output {{file.toString()}}\""
   },
   "activationEvents": [
@@ -126,6 +126,13 @@
           "default": "error",
           "markdownDescription": "Unknown value used with the [`@tailwind` directive](https://tailwindcss.com/docs/functions-and-directives/#tailwind)",
           "scope": "language-overridable"
+        },
+        "tailwindCSS.experimental.classRegex": {
+          "type": "array",
+          "scope": "language-overridable"
+        },
+        "tailwindCSS.experimental.showPixelValues": {
+          "type": "boolean"
         }
       }
     }
@@ -145,7 +152,10 @@
     "@typescript-eslint/parser": "^2.30.0",
     "eslint": "^6.8.0",
     "coc.nvim": "^0.0.77",
+    "dset": "^2.0.1",
     "npm-run-all": "^4.1.5",
+    "postcss": "^7.0.27",
+    "postcss-selector-parser": "^6.0.2",
     "rimraf": "^3.0.2",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5",
