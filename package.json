@@ -1,6 +1,6 @@
 {
   "name": "coc-tailwind-intellisense",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Tailwind CSS Intellisense for coc.nvim",
   "author": "Rodrigo C. Guzmán <rodrigopcg@gmail.com>",
   "contributors": [
