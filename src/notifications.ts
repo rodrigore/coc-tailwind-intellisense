@@ -1,8 +1,7 @@
-import { Connection } from 'vscode-languageserver'
 import { LanguageClient } from 'coc.nvim'
 
 export function onMessage(
-  connection: LanguageClient | Connection,
+  connection: LanguageClient,
   name: string,
   handler: (params: any) => Thenable<Record<string, any>>
 ): void {

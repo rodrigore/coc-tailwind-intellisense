@@ -1,7 +1,6 @@
 import mitt from 'mitt'
 import { LanguageClient } from 'coc.nvim'
 import crypto from 'crypto'
-import { Connection } from 'vscode-languageserver'
 
 export interface NotificationEmitter {
   on: (name: string, handler: (args: any) => void) => void
@@ -10,7 +9,7 @@ export interface NotificationEmitter {
 }
 
 export function createEmitter(
-  client: LanguageClient | Connection
+  client: LanguageClient
 ): NotificationEmitter {
   const emitter = mitt()
   const registered: string[] = []
