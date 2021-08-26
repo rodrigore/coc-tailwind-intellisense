@@ -1,6 +1,6 @@
 {
   "name": "coc-tailwind-intellisense",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Tailwind CSS Intellisense for coc.nvim",
   "author": "Rodrigo C. Guzmán <rodrigopcg@gmail.com>",
   "contributors": [
@@ -24,9 +24,10 @@
     "watch": "webpack --watch",
     "build": "webpack",
     "prepare": "npm run clean && npm run build",
-    "prepare:server": "cd intellisense && npm install && cd .. && npm run build-server && npm run minify-server",
-    "build-server": "glob-exec --foreach --parallel \"intellisense/packages/tailwindcss-intellisense/src/server.ts\" -- \"ncc build {{file}} -o lib-server/{{file.toString().replace(/^src\\//, '').replace(/\\.ts$/, '')}}\"",
-    "minify-server": "glob-exec --foreach --parallel \"lib-server/**/*.js\" -- \"terser {{file}} --compress --mangle --output {{file.toString()}}\""
+    "prepare:server": "npm run bootstrap-server && npm run build-server && npm run minify-server",
+    "bootstrap-server": "cd intellisense && npm install && npm run bootstrap",
+    "build-server": "cd intellisense && npx lerna run build && cp -r packages/vscode-tailwindcss/dist/server/ ../",
+    "minify-server": "glob-exec --foreach --parallel \"server/**/*.js\" -- \"terser {{file}} --compress --mangle --output {{file.toString()}}\""
   },
   "activationEvents": [
     "workspaceContains:**/tailwind.js",
@@ -54,6 +55,12 @@
           },
           "default": {},
           "markdownDescription": "Enable features in languages that are not supported by default. Add a mapping here between the new language and an already supported language.\n E.g.: `{\"plaintext\": \"html\"}`"
+        },
+        "tailwindCSS.colorDecorators": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Controls whether the editor should render inline color decorators for Tailwind CSS classes and helper functions.",
+          "scope": "language-overridable"
         },
         "tailwindCSS.validate": {
           "type": "boolean",
@@ -127,38 +134,57 @@
           "markdownDescription": "Unknown value used with the [`@tailwind` directive](https://tailwindcss.com/docs/functions-and-directives/#tailwind)",
           "scope": "language-overridable"
         },
+        "tailwindCSS.lint.recommendedVariantOrder": {
+          "type": "string",
+          "enum": [
+            "ignore",
+            "warning",
+            "error"
+          ],
+          "default": "warning",
+          "markdownDescription": "Class variants not in the recommended order (applies in [JIT mode](https://tailwindcss.com/docs/just-in-time-mode) only)",
+          "scope": "language-overridable"
+        },
         "tailwindCSS.experimental.classRegex": {
           "type": "array",
           "scope": "language-overridable"
         },
-        "tailwindCSS.experimental.showPixelValues": {
-          "type": "boolean"
+        "tailwindCSS.showPixelEquivalents": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Show `px` equivalents for `rem` CSS values."
+        },
+        "tailwindCSS.rootFontSize": {
+          "type": "number",
+          "default": 16,
+          "markdownDescription": "Root font size in pixels. Used to convert `rem` CSS values to their `px` equivalents. See `#tailwindCSS.showPixelEquivalents#`."
         }
       }
     }
   },
   "dependencies": {
-    "@zeit/ncc": "^0.22.3",
+    "@vercel/ncc": "^0.29.2",
     "glob-exec": "^0.1.1",
     "lodash": "^4.17.20",
     "mitt": "^1.2.0",
-    "vscode-languageclient": "^6.1.3",
-    "vscode-languageserver": "^6.1.1",
-    "vscode-languageserver-protocol": "^3.15.3"
+    "vscode-languageclient": "^7.0.0",
+    "vscode-languageserver": "^7.0.0",
+    "vscode-languageserver-protocol": "^3.16.0",
+    "vscode-languageserver-textdocument": "^1.0.1"
   },
   "devDependencies": {
-    "@types/node": "^14.0.13",
+    "@types/node": "^10.12.0",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
-    "eslint": "^6.8.0",
-    "coc.nvim": "^0.0.77",
+    "coc.nvim": "^0.0.80",
     "dset": "^2.0.1",
+    "eslint": "^6.8.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^7.0.27",
     "postcss-selector-parser": "^6.0.2",
     "rimraf": "^3.0.2",
     "ts-loader": "^7.0.5",
-    "typescript": "^3.9.5",
+    "typescript": "^4.3.5",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
   }

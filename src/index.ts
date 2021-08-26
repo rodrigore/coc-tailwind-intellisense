@@ -1,5 +1,6 @@
-import { ExtensionContext, LanguageClient, LanguageClientOptions, ServerOptions, services, TransportKind, workspace, Uri } from 'coc.nvim';
-import { TextDocument, WorkspaceFolder } from 'vscode-languageserver-protocol';
+import { ExtensionContext, LanguageClient, LanguageClientOptions, ServerOptions, services, TransportKind, workspace, Uri, window } from 'coc.nvim';
+import { WorkspaceFolder } from 'vscode-languageserver-protocol';
+import { TextDocument } from "vscode-languageserver-textdocument";
 import { registerConfigErrorHandler } from './registerConfigErrorHandler';
 import { DEFAULT_LANGUAGES } from './languages';
 import { onMessage } from './notifications';
@@ -58,8 +59,8 @@ function getOuterMostWorkspaceFolder(folder: WorkspaceFolder): WorkspaceFolder {
 export async function activate(context: ExtensionContext): Promise<void> {
   let {subscriptions} = context;
   const config = workspace.getConfiguration().get<any>('tailwindCSS', {}) as any;
-  if (!config.enable) return;
-  const file = context.asAbsolutePath('./lib-server/intellisense/packages/tailwindcss-intellisense/src/server/index.js');
+  if (!config.enable) {return;}
+  const file = context.asAbsolutePath('./server/tailwindServer.js');
 
   function bootWorkspaceClient(folder: WorkspaceFolder) {
     let serverOptions: ServerOptions = {
@@ -95,14 +96,14 @@ export async function activate(context: ExtensionContext): Promise<void> {
     let client = new LanguageClient('tailwindcss-intellisense', 'Tailwind CSS IntelliSense', serverOptions, clientOptions);
 
     client.onReady().then(() => {
-        workspace.showMessage('Tailwind CSS intellisense ready v0.5.10');
+        window.showMessage('Tailwind CSS intellisense ready v0.6.14');
 
         let emitter = createEmitter(client);
         registerConfigErrorHandler(emitter);
 
         onMessage(client, 'getConfiguration', async (scope) => {
           return workspace.getConfiguration('tailwindCSS', scope);
-        })
+        });
     });
 
     subscriptions.push(
