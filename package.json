@@ -30,9 +30,13 @@
   },
   "activationEvents": [
     "workspaceContains:**/tailwind.js",
+    "workspaceContains:**/tailwind.cjs",
     "workspaceContains:**/tailwind.config.js",
+    "workspaceContains:**/tailwind.config.cjs",
     "workspaceContains:**/tailwind-config.js",
-    "workspaceContains:**/.tailwindrc.js"
+    "workspaceContains:**/tailwind-config.cjs",
+    "workspaceContains:**/.tailwindrc.js",
+    "workspaceContains:**/.tailwindrc.cjs"
   ],
   "contributes": {
     "configuration": {
