@@ -156,7 +156,7 @@
     "@typescript-eslint/parser": "^2.30.0",
     "eslint": "^6.8.0",
     "coc.nvim": "^0.0.77",
-    "dset": "^2.0.1",
+    "dset": "^3.1.2",
     "npm-run-all": "^4.1.5",
     "postcss": "^7.0.27",
     "postcss-selector-parser": "^6.0.2",
